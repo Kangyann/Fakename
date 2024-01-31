@@ -6,7 +6,16 @@ export default {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#F3F8FF',
+        secondary: '#092635', 
+        border : '#9BB8CD'
+      },
+      fontFamily: {
+        inter: ['Inter'],
+      },
+    },
   },
-  plugins: [],
+  plugins: [require('daisyui')],
 }
