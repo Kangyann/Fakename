@@ -42,15 +42,18 @@
                     <button type="submit" class="btn btn-sm rounded bg-border">Submit</button>
                 </div>
             </form>
-            <div class="my-6">
-                <div class="">
-                    <img src="{{ storage }}" alt="">
+            <div class="my-6 flex">
+                <div class="w-32 h-32">
+                    <img src="{{ asset('storage/images/profile-male.png') }}" alt="">
                 </div>
-                <div class="tooltip tooltip-right" data-tip="Copy Text"
-                    data-copy="{{ $data['firstName'] . ' ' . $data['lastName'] }}" id="copy">
-                    <span
-                        class="p-1 px-2 hover:bg-border hover:rounded hover:cursor-pointer active:bg-opacity-75 transition-all"
-                        data-text="{{ $data['firstName'] . ' ' . $data['lastName'] }}">{{ $data['firstName'] . ' ' . $data['lastName'] }}</span>
+                <div class="font-inter flex flex-col">
+                    {{-- Full Name --}}
+                    <div class="tooltip tooltip-right" data-tip="Copy Text"
+                        data-copy="{{ $data['firstName'] . ' ' . $data['lastName'] }}" id="copy">
+                        <span
+                            class="p-1 px-2 font-bold text-lg hover:bg-border hover:rounded hover:cursor-pointer active:bg-opacity-75 transition-all"
+                            data-text="{{ $data['firstName'] . ' ' . $data['lastName'] }}">{{ $data['firstName'] . ' ' . $data['lastName'] }}</span>
+                    </div>
                 </div>
             </div>
         </div>
