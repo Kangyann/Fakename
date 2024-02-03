@@ -18,6 +18,7 @@ class FakerController extends Controller
         $data = [
             'firstName' => $faker->firstName,
             'lastName' => $faker->lastName,
+            'gender' => $faker->title,
             'username' => $faker->userName,
             'password' => $faker->password,
             'datetime' => $faker->dateTimeAD,
