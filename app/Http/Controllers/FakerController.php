@@ -4,32 +4,43 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Faker\Factory as Faker;
-
+use Faker\Provider\PhoneNumber;
 class FakerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     protected $listeners = ['updateInput' => 'handleDataInput'];
-    public function index()
+    public function index(Request $request)
     {
-        $requestCountry = null;
-        $country = $requestCountry !== null ? $requestCountry : 'en_EN';
-        $faker = Faker::create('id_ID');
-        $title = $faker->title;
+        $country = null;
+        $gender = null;
+        if ($request->has('country') || $request->has('gender')) {
+            $gender = $request->gender;
+            $country = $request->country;
+        }
+        $country = $country == null ? 'id_ID' : $country;
+        $gender = $gender == null ? null : $gender;
+        $faker = Faker::create($country);
         $data = [
             'u' => [
-                'firstName' => $faker->firstName,
-                'lastName' => $faker->lastName,
-                'gender' => $title,
-                'datetime' => $faker->dateTime,
-                'phoneNumber' => $faker->tollFreePhoneNumber,
-                'color' => $faker->colorName
+                'firstName' => $faker->firstName($gender),
+                'lastName' => $faker->lastName($gender),
+                'gender' => $faker->title($gender),
+                'birthDay' => [
+                    'day' => $faker->dayOfMonth,
+                    'monthName' => $faker->monthName,
+                    'month' => $faker->month,
+                    'year' => $faker->year,
+                ],
+                'address' => $faker->address,
+                'phoneNumber' => $faker->phoneNumber,
+                'color' => $faker->colorName,
+                'nik' => $faker->nik
             ],
             'a' => [
                 'city' => $faker->city,
                 'state' => $faker->state,
-                'address' => $faker->addrress,
                 'country' => $faker->country,
                 'postcode' => $faker->postcode,
                 'latitude' => $faker->latitude,

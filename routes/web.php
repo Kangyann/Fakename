@@ -14,4 +14,4 @@ use App\Http\Controllers\FakerController;
 |
 */
 
-Route::get('/', [FakerController::class,'index']);
+Route::get('/', [FakerController::class,'index'])->name('faker');
