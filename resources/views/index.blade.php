@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://rsms.me/">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 </head>
 
@@ -17,12 +18,12 @@
             </div>
         </div>
         {{--  --}}
-        <div class="container lg:w-2/3 md:w-2/3 w-11/12 mx-auto my-3 border-2 border-border rounded relative">
+        <div class="container lg:w-2/3 md:w-2/3 w-11/12 mx-auto my-3 px-3 border-2 border-border rounded relative">
             <div class="flex flex-wrap justify-center gap-2 p-2">
                 <label class="swap">
-                    <input type="checkbox" />
+                    <input type="checkbox" id="buttonui" />
                     <div class="btn btn-sm bg-border rounded flex swap-on">
-                        <span>Disable UI</span>
+                        <span>Enable Button</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -32,7 +33,7 @@
                         </svg>
                     </div>
                     <div class="btn btn-sm bg-border rounded flex swap-off">
-                        <span>Enable UI</span>
+                        <span>Disable Button</span>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -40,17 +41,7 @@
                         </svg>
                     </div>
                 </label>
-                <button class="btn btn-sm bg-border rounded flex gap-1">
-                    <span>Screenshot</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-                    </svg>
-                </button>
-                <button class="btn btn-sm bg-border rounded flex gap-1">
+                <button class="btn btn-sm bg-border rounded flex gap-1" disabled>
                     <span>Custom Person</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5">
@@ -59,12 +50,12 @@
                     </svg>
                 </button>
             </div>
-            {{-- <h1 class="underline text-xl font-inter font-light px-2">Free Tools for Random Generate Credientials</h1> --}}
-            <div class="my-6 flex lg:flex-row flex-col px-6 w-full py-2 gap-9 line-clamp-1">
+            <div class="my-6 flex lg:flex-row flex-col px-6 w-full h-full py-2 gap-9 line-clamp-1" id="sc">
                 <div class="my-2 flex flex-col items-center text-sm gap-2 lg:w-56 w-full">
                     @livewire('upload-image')
                     <hr>
-                    <form action="{{ route('faker') }}" method="GET" class="lg:w-full w-1/2 mt-3">
+                    <form action="{{ route('faker') }}" method="GET" class="lg:w-full w-1/2 mt-3 transition"
+                        id="ui">
                         <div class="flex flex-col">
                             <span>Set Gender</span>
                             <select name="gender" id=""
@@ -84,11 +75,11 @@
                             <button type="submit"
                                 class="btn btn-sm rounded bg-border hover:bg-opacity-80 hover:bg-border ">Submit</button>
                         </div>
+                        <div class="text-center mt-3">
+                            <span>Found Some Bug ?</span>
+                            <a href="https://wa.me/6283895886895/" class="text-border">Contact Me</a>
+                        </div>
                     </form>
-                    <div class="">
-                        <span>Found Some Bug ?</span>
-                        <a href="https://wa.me/6283895886895/" class="text-border">Contact Me</a>
-                    </div>
                 </div>
                 <div class="font-inter flex flex-col gap-1 text-sm w-full">
                     {{-- User Details --}}
@@ -343,7 +334,8 @@
     </div>
 </body>
 <script>
-    const $ = document.querySelectorAll('#copy')
+    const $ = document.querySelectorAll('#copy'),
+        $u = document.querySelector('[id="buttonui"]')
     $.forEach(x => {
         x.addEventListener('click', () => {
             let att = x.getAttribute('data-copy'),
@@ -355,6 +347,21 @@
             }, 500);
         })
     });
+    let _c = true
+
+    function ui() {
+        _c = _c === true ? _c = false : _c = true
+        let ui = document.querySelectorAll('[id="ui"]'),
+            sc = document.querySelector('[id="sc"]')
+        ui.forEach(x => {
+            _c == false ? [x.classList.add('opacity-0')] : [x.classList.remove('opacity-0')]
+            setTimeout(() => {
+                _c == false ? x.classList.add('hidden') : x.classList.remove('hidden')
+            }, 300);
+        })
+    }
+
+    $u.addEventListener('click', ui)
 </script>
 
 </html>

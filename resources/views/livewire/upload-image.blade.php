@@ -15,7 +15,7 @@
 
         </div>
     @endif
-    <div class="flex flex-col w-full tooltip tooltip-bottom text-end mt-2" data-tip="User Your Profile">
+    <div class="flex flex-col w-full tooltip tooltip-bottom text-end mt-2 transition" data-tip="User Your Profile" id="ui">
         <input type="file" wire:model="uploadImage" id=""
             class="file-input file-input-ghost border border-border bg-border file-input-sm rounded focus:outline-none">
     </div>
